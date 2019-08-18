@@ -16,11 +16,15 @@ namespace cli
     {
         static void Main(string[] args)
         {
-            var filePath = args[0];
-            
             var projector = new CountEvents();
-            new EventStore(filePath).Replay(e => projector.Projection(e));
+            new EventStore(FilePathFrom(args)).Replay(e => projector.Projection(e));
             Console.WriteLine("number of events: {0}", projector.Result);
+        }
+
+        private static string FilePathFrom(string[] args)
+        {
+            if (args.Length < 1) throw new ArgumentException("No file path supplied");
+            return args[0];
         }
     }
 }
