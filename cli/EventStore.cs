@@ -23,10 +23,7 @@ namespace cli
             var enumerable = JsonConvert.DeserializeObject<IEnumerable<Event>>(data);
 
             Console.WriteLine("replaying events ...");
-            foreach (var s in enumerable)
-            {
-                projection(s);
-            }
+            foreach (var @event in enumerable) projection(@event);
         }
     }
 }
