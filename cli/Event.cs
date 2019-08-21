@@ -5,9 +5,9 @@ namespace cli
 {
     internal class Event
     {
-        public string id {get; set;}
-        public string type {get; set;}
-        public DateTime timestamp {get; set;}
-        public Dictionary<string, string> payload{get;set;}
+        public string Id {get; set;}
+        public string Type {get; set;}
+        public DateTime Timestamp {get; set;}
+        public Dictionary<string, string> Payload{get;set;}
     }
 }

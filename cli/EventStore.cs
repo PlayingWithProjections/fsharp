@@ -7,23 +7,23 @@ namespace cli
 {
     internal class EventStore
     {
-        private readonly string _filePath;
+        private readonly string filePath;
 
         public EventStore(string filePath)
         {
-            _filePath = filePath;
+            this.filePath = filePath;
         }
 
         public void Replay(Action<Event> projection)
         {
-            Console.WriteLine($"reading events from '{_filePath}'");
-            var data = File.ReadAllText(_filePath);
+            Console.WriteLine($"reading events from '{filePath}'");
+            var text = File.ReadAllText(filePath);
 
             Console.WriteLine("parsing events ...");
-            var enumerable = JsonConvert.DeserializeObject<IEnumerable<Event>>(data);
+            var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(text);
 
             Console.WriteLine("replaying events ...");
-            foreach (var @event in enumerable) projection(@event);
+            foreach (var @event in events) projection(@event);
         }
     }
 }
