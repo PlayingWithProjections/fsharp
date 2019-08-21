@@ -7,14 +7,14 @@ namespace cli
 {
     internal class EventStore
     {
-        private readonly string filePath;
+        private readonly Action<Event>[] projections;
 
-        public EventStore(string filePath)
+        public EventStore(params Action<Event>[] projections)
         {
-            this.filePath = filePath;
+            this.projections = projections;
         }
 
-        public void Replay(Action<Event> projection)
+        public void Replay(string filePath)
         {
             Console.WriteLine($"reading events from '{filePath}'");
             var text = File.ReadAllText(filePath);
@@ -23,7 +23,14 @@ namespace cli
             var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(text);
 
             Console.WriteLine("replaying events ...");
-            foreach (var @event in events) projection(@event);
+            foreach (var @event in events)
+            {
+                foreach (var projection in projections)
+                {
+                    projection(@event);
+                }
+                ;
+            }
         }
     }
 }

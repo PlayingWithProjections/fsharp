@@ -17,7 +17,8 @@ namespace cli
         static void Main(string[] args)
         {
             var projector = new CountEvents();
-            new EventStore(FilePathFrom(args)).Replay(e => projector.Projection(e));
+            new EventStore(e => projector.Projection(e))
+                .Replay(FilePathFrom(args));
 
             Console.WriteLine("number of events: {0}", projector.Result);
         }
