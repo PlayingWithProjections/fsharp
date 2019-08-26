@@ -2,16 +2,6 @@
 
 namespace cli
 {
-    internal class CountEvents
-    {
-        public int Result { get; private set; }
-
-        public void Projection(Event @event)
-        {
-            Result++;
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)
@@ -27,6 +17,16 @@ namespace cli
         {
             if (args.Length < 1) throw new ArgumentException("Please specify a file to replay");
             return args[0];
+        }
+    }
+
+    internal class CountEvents
+    {
+        public int Result { get; private set; }
+
+        public void Projection(Event @event)
+        {
+            Result++;
         }
     }
 }
