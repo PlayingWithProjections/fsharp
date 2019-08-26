@@ -29,7 +29,6 @@ namespace cli
                 {
                     projection(@event);
                 }
-                ;
             }
         }
     }
