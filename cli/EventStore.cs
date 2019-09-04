@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -16,19 +15,25 @@ namespace cli
 
         public void Replay(string filePath)
         {
-            Console.WriteLine($"reading events from '{filePath}'");
-            var text = File.ReadAllText(filePath);
-
-            Console.WriteLine("parsing events ...");
-            var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(text);
-
-            Console.WriteLine("replaying events ...");
-            foreach (var @event in events)
+            using (var stream = File.OpenText(filePath))
+            using (var reader = new JsonTextReader(stream))
             {
-                foreach (var projection in projections)
+                var serializer = new JsonSerializer();
+                while (reader.Read())
                 {
-                    projection(@event);
+                    if (reader.TokenType == JsonToken.StartObject)
+                    {
+                        Project(serializer.Deserialize<Event>(reader));
+                    }
                 }
+            }
+        }
+
+        private void Project(Event @event)
+        {
+            foreach (var projection in projections)
+            {
+                projection(@event);
             }
         }
     }
