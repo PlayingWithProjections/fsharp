@@ -1,5 +1,5 @@
 # Playing with Projections in F#
-The default version of this project is dotnetcore 3.1. You can download the latest version here: https://dotnet.microsoft.com/download
+The project targets `netcoreapp2.1`, which means it should compile on .NET Core 2.1 or later. You can download the latest version here: https://dotnet.microsoft.com/download
 
 ## Getting started: Visual Studio or Project Rider
 In Visual Studio/Project Rider, specify a command line argument pointing to the json file you want to replay.
